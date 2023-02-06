@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片懒加载</title>
+    <style>
+        .a {
+            height: 1000px;
+        }
+
+        img {
+            height: 394px;
+            width: 650px;
+            background-color: rgb(223, 226, 223);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a"></div>
+    <div class="a"></div>
+    <img data-src="http://static.mafengshe.com/home/pic/2.jpg?imageMogr2/quality/40" alt="">
+    <div class="a"></div>
+    <div class="a"></div>
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script>
+        function isShow($node) {
+            var winHeight = window.innerHeight;
+            var windowYOffset = window.pageYOffset;
+            var imgHeight = $node.height();
+            var imgYOffset = $node.offset().top;
+            return (imgHeight + imgYOffset >= windowYOffset) && (imgYOffset <= windowYOffset + winHeight);
+        }
+
+        var timer = null;
+        function LazyImg($ele) {
+            window.onscroll = function () {
+                clearTimeout(timer);
+                timer = setTimeout(function () {
+                    $ele.each(function () {
+                        var $this = $(this);
+                        if (isShow($this))
+                            $this.attr("src", $this.data("src"));
+                    })
+                }, 100);
+            }
+        }
+        new LazyImg($("img"));
+        // function isShow($node) {
+        //     var windowH = window.innerHeight;
+        //     var scrollTop = $(window).scrollTop();
+        //     var nodeOT = $node.offset().top;
+        //     var nodeH = $node.height();
+        //     return nodeOT <= scrollTop + windowH && nodeOT + nodeH >= scrollTop
+        // }
+        // window.onscroll = function () {
+        //     console.log(isShow($('img')))
+        //     if (isShow($('img'))) {
+        //         $('img').attr("src", $('img').data('src'))
+        //     }
+        // }
+
+
+    </script>
+</body>
+
+</html>
