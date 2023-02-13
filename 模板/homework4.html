@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板——作业四</title>
+    <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <div>{{fullname}}</div>
+        <button @click="btnClick()">按钮</button>
+    </div>
+    <script>
+        var t1 = document.getElementsByClassName("test")
+        const app = new Vue({
+            el: "#app",
+
+            data: {
+                firstName: 'Foo',
+                lastName: 'Bar',
+                fullname: "测试"
+            },
+            methods: {
+                btnClick: function () {
+                    if (this.firstName == 'Foo' && this.lastName == 'Bar') {
+                        console.log("不变")
+                    } else {
+                        this.fullname = "改变"
+                        console.log("改变")
+
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
