@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    复杂表单——注册
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
+</head>
+
+<body>
+  <form action="/signup">
+    username:<input type="text" id="username" oninput="usernameChange()" pattern="^[a-zA-Z_][\w]{5,17}$"
+      required="required">
+    password: <input type="text" id="password" oninput="passwordInput()" pattern="[\w]{6,18}" required="required">
+    password repeat: <input type="text" id="password-repeat" oninput="passwordRepeatInput()" required="required">
+    <input type="submit">
+  </form>
+  <script>
+    //判断俩次输入是否一致
+    var password;
+    function passwordInput() {
+      password = document.getElementById("password").value
+    }
+    function passwordRepeatInput() {
+      var input = document.getElementById("password-repeat")
+      if (password != input.value) {
+        input.setCustomValidity("Password values do not match.")
+      } else {
+        input.setCustomValidity("")
+      }
+    }
+
+    //检查用户名的输入
+    var input = document.getElementById("username")
+    var timer
+    function usernameChange() {
+      clearTimeout(timer)
+      timer = setTimeout(function () {
+        $.ajax({
+          url: "/usernameExist",
+          method: "post",
+          data: {
+            username: input.value
+          },
+          success: function (data) {
+            console.log(data)
+            if (data.exist) {
+              alert("该用户名已经存在");
+            } else {
+              // alert("用户名合法");
+            }
+          }
+        })
+      }, 1000);
+    }
+  </script>
+</body>
+
+</html>
