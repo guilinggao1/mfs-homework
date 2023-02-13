@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板——作业二</title>
+    <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <form action="">
+            username: <input type="text" class="user">
+            password: <input type="text" class="pass">
+            <button type="button" @click="submit">提交</button>
+        </form>
+    </div>
+    <script>
+        var username = document.getElementsByClassName("user").value
+        var password = document.getElementsByClassName("pass").value
+        // 当type=“submit"时按钮会自动提交表单数据到表单的action的地址，而由于表单没有写action属性，action默认为""，所以就会有自动刷新的效果产生。
+        const app = new Vue({
+            el: "#app",
+            data: {
+                username: '',
+                password: '',
+
+            },
+            methods: {
+                submit: function () {
+                    $.ajax({
+                        method: 'post',
+                        url: '/',
+                        dataType: 'json',
+                        data: { username: username, password: password },
+                        success: function (res) {
+                            console.log(res.title);
+                        }
+                    })
+                },
+            }
+        })
+    </script>
+</body>
+
+</html>
