@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板作业——作业一</title>
+    <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+    <style>
+        img {
+            width: 200px;
+            height: 200px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <img :src="changeSrc" alt="" class="img1" @load="imgLoad()">
+    </div>
+    <script>
+        var img1 = document.getElementsByClassName("img1")[0]
+        const app = new Vue({
+            el: "#app",
+            data: {
+                imgSrc: [
+                    "https://www.yulumi.cn/gl/uploads/allimg/201121/11200I923-1.jpg",
+                    "https://pic.3gbizhi.com/2019/1112/20191112013312648.jpg",
+                    "https://desk-fd.zol-img.com.cn/t_s960x600c5/g1/M0B/03/06/ChMljl402K6IOTZbAARWayFg6S4AAQJPwFhuRIABFaD752.jpg"
+                ],
+                imgIndex: 0
+            },
+            computed: {
+                changeSrc: function () {
+                    return this.imgSrc[this.imgIndex]
+                }
+            },
+            methods: {
+                imgLoad() {
+                    setTimeout(() => {
+                        if (this.imgIndex < 2) {
+                            this.imgIndex++
+                        } else {
+                            this.imgIndex = 0;
+                        }
+                    }, 1000);
+                }
+            }
+
+        })
+    </script>
+</body>
+
+</html>
