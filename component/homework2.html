@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slot——作业2</title>
+    <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+    <style>
+        .sep {
+            border: solid 1px yellow;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <container>
+            <!-- <div>content</div> -->
+            <!-- 将content1和2分开 -->
+            <div slot="content1">content1</div>
+            <div slot="content2">content2</div>
+        </container>
+    </div>
+    <script>
+
+
+        Vue.component("container", {
+            //slot的内容会被上面的contaner替换——页头和页尾
+            template: `<div class="main">
+            <header>header</header>
+            <slot name="content1"></slot>
+            <div class="sep"></div>
+            <slot name="content2"></slot>
+            <footer>footer</footer>
+        </div>`
+        })
+        var app = new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+
+</html>
