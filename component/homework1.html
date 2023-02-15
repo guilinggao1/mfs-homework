@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>component详解</title>
+    <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+    <style>
+        .parent {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <parent class="parent">
+        </parent>
+    </div>
+    <script>
+        Vue.component("parent", {
+            data: function () {
+                return { a: 0 }
+            },
+            methods: {
+                childIncrement: function () {
+                    this.a++
+                }
+            },
+            template: `
+    <div class="parent">
+        <p>{{a}}</p>
+        <child :message="a" @increment="childIncrement"></child>
+    </div>
+    `
+        })
+        Vue.component("child", {
+            // props: ["message"],
+            props: {
+                message: {
+                    //用户必须传值==>上面传值:message="a"
+                    required: true,
+                    //设置默认值
+                    default() {
+                        return 0
+                    }
+                }
+            },
+            data: function () {
+                return {
+                    a1: 0,
+                    a2: 0
+                }
+            },
+            methods: {
+                btnClick1(e) {
+                    this.a1++
+                    this.$emit("increment",)
+                },
+                btnClick2(e) {
+                    this.a2++
+                    this.$emit("increment",)
+                }
+            },
+            template: `
+    <div class="child">
+        <button @click="btnClick1 ">{{a1}}</button>
+        <button @click="btnClick2 ">{{a2}}</button>
+    </div>
+        `
+        })
+        var app = new Vue({
+            el: "#app",
+            data: {
+            }
+        })
+    </script>
+</body>
+
+</html>
