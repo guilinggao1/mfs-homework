@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown</title>
+    <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/marked/0.3.6/marked.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #app {
+            display: flex;
+            height: 100vh;
+        }
+
+        textarea {
+            width: 50%;
+            background-color: #f6f6f6;
+            border: 2px solid rgb(227, 224, 224);
+            padding: 20px;
+            font-size: 14px;
+            resize: none;
+        }
+
+        .content {
+            width: 50%;
+            background-color: #f6f6f6;
+            padding: 0 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <textarea v-model="text"></textarea>
+        <div class="content" v-html="content"></div>
+    </div>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                text: "",
+            },
+            computed: {
+                content: function () {
+                    return marked(this.text)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
