@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+    <title>树</title>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <tree>
+
+            </tree>
+        </div>
+        <!-- <li class="tree">
+            <li class="treeItem"></li>
+        </li> -->
+        <!-- <li class="treeItem">
+            <div>{{treeData.name}}
+                <span>[{{isOpen?'-':'+'}}]</span>
+            </div>
+            <ul>
+                <treeItem v-for="data in treeData.children" :data="treeData"></treeItem>
+                <li @click="addChild">+</li>
+            </ul>
+
+        </li> -->
+    </div>
+    <script>
+        Vue.component('tree', {
+            data: function () {
+                return {
+                    treeData: {
+                        name: 'My Tree',
+                        children: [
+                            { name: 'hello' },
+                            { name: 'wat' },
+                            {
+                                name: 'child folder',
+                                children: [
+                                    {
+                                        name: 'child folder',
+                                        children: [
+                                            { name: 'hello' },
+                                            { name: 'wat' }
+                                        ]
+                                    },
+                                    { name: 'hello' },
+                                    { name: 'wat' },
+                                    {
+                                        name: 'child folder',
+                                        children: [
+                                            { name: 'hello' },
+                                            { name: 'wat' }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            template: `
+            <div class="tree">
+                <treeItem :treeData="treeData">
+                </treeItem>
+            </div>
+            `
+        })
+        Vue.component('treeItem', {
+            props: { treeData: Object },
+            data: function () {
+                return {
+                    isOpen: false
+                }
+            },
+            computed: {
+                //判断是否有孩子
+                isFolder() {
+                    return this.treeData.children && this.treeData.children.length
+                }
+            },
+            methods: {
+                addChild: function () {
+                    this.treeData.children.push({
+                        name: 'new stuff'
+                    })
+                },
+                changeType: function () {
+                    if (!this.isFolder) {
+                        this.treeData.children = []
+                        this.addChild()
+                        this.isOpen = true
+                    }
+                },
+                toggle: function () {
+                    if (this.isFolder) {
+                        this.isOpen = !this.isOpen
+                    }
+                }
+            },
+            template: `
+            <div class="treeItem">
+            <li  @click="toggle" @dblclick="changeType">{{treeData.name}}
+                <span v-if="isFolder">[{{isOpen?'-':'+'}}]</span>
+            </li>
+            <ul v-show="isOpen">
+                <treeItem v-for="treeData in treeData.children" :treeData="treeData"></treeItem>
+                <li @click="addChild">+</li>
+            </ul>
+        </div>
+            `
+        })
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+            }
+        })
+    </script>
+</body>
+
+</html>
