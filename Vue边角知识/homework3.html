@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>渐变效果</title>
+    <script src="https://unpkg.com/vue@2.3.4/dist/vue.js"></script>
+    <style>
+        /* //渐变 */
+        /* 1. 声明过渡效果 */
+        .fade-move,
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: all 1s cubic-bezier(0.55, 1, 0.1, 1);
+        }
+
+        /* 2. 声明进入和离开的状态 */
+        /* 最初的进入动画 */
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0;
+            /* transform: scaleX(0.04) scaleX(1) translate(60px, 30px); */
+            transform: translateY(60px);
+        }
+
+        /* 离开 */
+        .fade-leave {
+            opacity: 0;
+            transform: translateY(60px);
+        }
+
+        */
+
+        /* 3. 确保离开的项目被移除出了布局流
+      以便正确地计算移动时的动画效果。 */
+        .fade-leave-active {
+            position: absolute;
+        }
+
+        .item {
+            width: 30px;
+            height: 60px;
+            border: 1px solid white;
+            /* background-color: aqua; */
+        }
+
+        .container {
+            position: relative;
+            padding: 0;
+            display: flex;
+            /* justify-content: space-between; */
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <button @click="btnAdd">Add</button>
+        <button @click="btnRemove">Remove</button>
+        <transition-group name="fade" class="container" tag="ul">
+            <div v-for="number in number" class="item" :key="number">
+                {{number}}
+            </div>
+        </transition-group>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                number: [1, 2, 3, 4],
+                show: true,
+                num: 1,
+            },
+
+            methods: {
+                btnAdd: function () {
+                    var len = this.number.length
+                    var ranNum = Math.ceil(Math.random() * len)
+                    this.number.splice(ranNum, 0, len + 1)
+                },
+                btnRemove: function () {
+                    var len = this.number.length;
+                    var ranNum = Math.ceil(Math.random() * len)
+                    if (ranNum > -1) {
+                        this.number.splice(ranNum, 1)
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
